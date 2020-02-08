@@ -20,7 +20,25 @@
 
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.css" rel="stylesheet">
+  <script src="vendor/jquery/jquery.min.js"></script>
   <script>
+
+  var user_location_details;
+
+  function findUserLocation(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successLocation);
+    } else {
+      console.log("error")
+    }
+  }
+
+  function successLocation(e){
+    user_location_details = e
+    console.log(e);
+  }
+
+
   function submitForm(){
 
     let testidvariable = document.querySelector('input[aria-label="testid"]').value
@@ -28,6 +46,9 @@
 
     let age_group = $("select.Age").children("option:selected").val()
     let email = document.querySelector('input[aria-label="Email"]').value
+
+    let elem = document.querySelector(".gigantic").id
+    let subj_feeling = elem.charAt(elem.length-1)
 
     let Pregnant = convertToBinary($("#Pregnant").is(":checked"))
     let Asthma = convertToBinary($("#Asthma").is(":checked"))
@@ -41,6 +62,8 @@
       "testid":testid,
       "age_group":age_group,
       "email" : email,
+      "location":user_location_details.coords,
+      "subj_feeling": subj_feeling,
       "conditions":{
         "Pregnant" :Pregnant,
         "Asthma": Asthma,
@@ -49,12 +72,26 @@
         "Blood":Blood,
         "ImmuneSystem": ImmuneSystem
       }
-
-
     }
+
     console.log(value)
-    window.location.href = "thanks.html";
-  }
+
+    //window.location.href = "thanks.html";
+    }
+
+
+
+    function handleEmojis(id){
+      let x = ["#h11","#h12","#h13","#h14"]
+      x.forEach((e)=>{
+        $(e).removeClass('gigantic')
+      })
+
+      id = "#h1"+ Number(id)
+      console.log(id)
+      // document.getElementById(id).addClass("gigantic");
+      $(id).addClass("gigantic");
+    }
 
 
 
@@ -62,9 +99,23 @@
     return val==true?1:0;
   }
   </script>
+  <style>
+  button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.gigantic{
+  font-size:50px
+}
+  </style>
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="findUserLocation()">
 
   <section class="content-section bg-light" id="about">
     <div class="container text-center">
@@ -78,25 +129,37 @@
 
       <div class="row">
         <div class="col-lg-1 col-2 p-1 offset-lg-4 offset-2">
+          <button class = "emojis" id = "1" onClick="handleEmojis(this.id)">
           <h1>
-            <strong>😊</strong>
+            <strong id = "h11">😊</strong>
           </h1>
+        </button>
         </div>
+
         <div class="col-lg-1 col-2 p-1">
+          <button class = "emojis" id = "2" onClick="handleEmojis(this.id)">
           <h1>
-            <strong>😐</strong>
+            <strong id = "h12">😐</strong>
           </h1>
+        </button>
         </div>
+
         <div class="col-lg-1 col-2 p-1">
+          <button class = "emojis" id = "3" onClick="handleEmojis(this.id)">
           <h1>
-            <strong>😖</strong>
+            <strong id = "h13">😖</strong>
           </h1>
+        </button>
         </div>
+
         <div class="col-lg-1 col-2 p-1">
+          <button class = "emojis" id = "4" onClick="handleEmojis(this.id)">
           <h1>
-            <strong>🤢</strong>
+            <strong id = "h14">🤢</strong>
           </h1>
+        </button>
         </div>
+
       </div>
 
       <hr>
@@ -212,7 +275,7 @@
   </a>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
+
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
