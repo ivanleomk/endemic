@@ -29,13 +29,13 @@
     let age_group = $("select.Age").children("option:selected").val()
     let email = document.querySelector('input[aria-label="Email"]').value
 
-    let Pregnant = $("#Pregnant").is(":checked")
-    let Asthma = $("#Asthma").is(":checked")
-    let Diabetes = $("#Diabetes").is(":checked")
-    let Liver = $("#Liver").is(":checked")
-    let Immune = $("#Immune").is(":checked")
-    let Blood = $("#Blood").is(":checked")
-    let ImmuneSystem = $("#ImmuneSystem").is(":checked")
+    let Pregnant = convertToBinary($("#Pregnant").is(":checked"))
+    let Asthma = convertToBinary($("#Asthma").is(":checked"))
+    let Diabetes = convertToBinary($("#Diabetes").is(":checked"))
+    let Liver = convertToBinary($("#Liver").is(":checked"))
+    let Immune = convertToBinary($("#Immune").is(":checked"))
+    let Blood = convertToBinary($("#Blood").is(":checked"))
+    let ImmuneSystem = convertToBinary($("#ImmuneSystem").is(":checked"))
 
     let value = {
       "testid":testid,
@@ -53,6 +53,13 @@
 
     }
     console.log(value)
+    window.location.href = "thanks.html";
+  }
+
+
+
+  function convertToBinary(val){
+    return val==true?1:0;
   }
   </script>
 </head>
