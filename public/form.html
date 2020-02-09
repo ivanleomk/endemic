@@ -113,6 +113,8 @@
   font-size:50px
 }
   </style>
+  <script src="js/apis.js"></script>
+  <script src="js/TestModel.js"></script>
 </head>
 
 <body id="page-top" onload="findUserLocation()">
@@ -283,6 +285,34 @@
 
   <!-- Custom scripts for this template -->
   <script src="js/stylish-portfolio.min.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="/__/firebase/7.8.0/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCtlhR_JcKU_bY5fOCOvUetbhr4_ZVUpUU",
+      authDomain: "endemic-health-hackathon.firebaseapp.com",
+      databaseURL: "https://endemic-health-hackathon.firebaseio.com",
+      projectId: "endemic-health-hackathon",
+      storageBucket: "endemic-health-hackathon.appspot.com",
+      messagingSenderId: "542524527393",
+      appId: "1:542524527393:web:7c7e59e121fc9336bba460"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    
+    var api = new Api(db);
+    const newTest = new Test(1.376666, 103.9879789, "pending", "testing@mail.com", "347-335-1250", Date.now());
+    api.setTest(newTest);
+    api.getAllTest();
+  </script>
 
 </body>
 
