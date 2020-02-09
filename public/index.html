@@ -20,24 +20,66 @@
 
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.css" rel="stylesheet">
+  <style>
+  @font-face {
+    font-family: frank_ruhl;
+    src: url("endemic/public/Frank_Ruhl_Libre/FrankRuhlLibre-Light.ttf") format("opentype");
+  }
+  @font-face {
+    font-family: frank_ruhl_bold;
+    src: url("endemic/public/Frank_Ruhl_Libre/FrankRuhlLibre-Bold.ttf") format("opentype");
+  }
+  .conversion_para{
+    font-family: frank_ruhl;
+  }
+  #conversion{
+    font-family: frank_ruhl;
+    background-color: #dacafb;
+    border-radius: 25px;
+    margin-bottom: 20px;
+  }
+
+  .sign-up{
+    margin-left: 20%;
+    width: 70%;
+  }
+
+  .thumbnail{
+    width: 400px;
+    height: 400px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+  </style>
 
 </head>
 
 <body id="page-top">
   <header class="masthead d-flex">
     <div class="container text-center my-auto">
-      <h1 class="mb-1">Endemic</h1>
+
       <h3 class="mb-5">
         <em></em>
       </h3>
-      <a class="btn btn-primary btn-xl js-scroll-trigger" href="form.html">Protect Yourself Against Coronova</a>
+
       <br>
       <br>
 
-      <a class="btn btn-primary btn-xl js-scroll-trigger" href="results.html">Check Test Results</a>
+
     </div>
     <div class="overlay"></div>
   </header>
+  <div class="container text-center my-auto">
+    <img src="img/circle.jpeg" class = "img-fluid img-circle thumbnail" alt="">
+
+    <h5 class = "conversion_para">Sign up <b>here</b> to get your free home Eswab kit mailed to you. </h5>
+    <h5 class = "conversion_para">More instructions are provided in the kit</h5>
+    <a id = "conversion" class="btn btn-xl js-scroll-trigger" href="form.html"><i>Fill in a form to see potential cases in your area</i></a>
+    <br>
+    <a id = "conversion" class="btn btn-xl js-scroll-trigger" href="results.html"><i>Check your results</i> </a>
+    <br>
+  </div>
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
