@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Endenic</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/stylish-portfolio.css" rel="stylesheet">
+  <script src="vendor/jquery/jquery.min.js"></script>
+
+  <script>
+  function getResult(){
+      let mockData = {
+        'result':"Pending",
+        'test-date':"23-04-20",
+      }
+
+      let testId = document.querySelector("input[aria-label='test_id']").value
+      console.log(testId)
+
+      document.getElementById("test-result").innerHTML= "Your test result is <b>"+ mockData["result"] +"</b>"
+      document.getElementById("test-date").innerHTML = "You took the test on "+ mockData["test-date"]
+  }
+  </script>
+
+  <style>
+
+  </style>
+  <script src="js/apis.js"></script>
+  <script src="js/TestModel.js"></script>
+</head>
+
+<body id="page-top">
+
+  <section class="content-section bg-light" id="about">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-lg-6 col-10 mx-auto">
+          <h2>Please Key in your Test ID below</h2>
+          </br>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-10 offset-1  mx-auto">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Test ID" aria-label="test_id" aria-describedby="basic-addon1">
+          </div>
+        </div>
+      </div>
+
+      <button class = "btn btn-primary btn-xl js-scroll-trigger" type="submit" onClick="getResult()">Get Results</button>
+
+      <hr>
+
+      <div id = "spinner"></div>
+      <div id = "results">
+        <h1 id = "test-result"></h1>
+        <h2 id = "test-date"></h1>
+        <h3 id = "advice"></h1>
+      </div>
+      </div>
+    </div>
+  </section>
+  <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Bootstrap core JavaScript -->
+
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/stylish-portfolio.min.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="/__/firebase/7.8.0/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCtlhR_JcKU_bY5fOCOvUetbhr4_ZVUpUU",
+      authDomain: "endemic-health-hackathon.firebaseapp.com",
+      databaseURL: "https://endemic-health-hackathon.firebaseio.com",
+      projectId: "endemic-health-hackathon",
+      storageBucket: "endemic-health-hackathon.appspot.com",
+      messagingSenderId: "542524527393",
+      appId: "1:542524527393:web:7c7e59e121fc9336bba460"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    var api = new Api(db);
+    const newTest = new Test(1.376666, 103.9879789, "pending", "testing@mail.com", "347-335-1250", Date.now());
+    api.setTest(newTest);
+    api.getAllTest();
+  </script>
+
+</body>
+
+</html>
