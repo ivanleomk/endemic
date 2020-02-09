@@ -38,6 +38,10 @@
     console.log(e);
   }
 
+  function emailIsValid (email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
 
   function submitForm(){
 
@@ -45,10 +49,34 @@
     let testid = testidvariable ==""? null:testidvariable
 
     let age_group = $("select.Age").children("option:selected").val()
-    let email = document.querySelector('input[aria-label="Email"]').value
+    if(age_group=="Choose"){
+      alert("Please select your age-group")
+      return
+    }
 
-    let elem = document.querySelector(".gigantic").id
+    let email = document.querySelector('input[aria-label="Email"]').value
+    if(email==""){
+      alert("Please enter your email!")
+      return
+    }
+    //Email-Validation
+
+    if(!emailIsValid(email)){
+      alert("Please enter a valid email!")
+      return
+    }
+
+    let elem;
+    try{
+      elem = document.querySelector(".gigantic").id
+    }
+    catch(err){
+      alert("Please select an emoji to describe how you are feeling!")
+      return
+    }
+
     let subj_feeling = elem.charAt(elem.length-1)
+
 
     let Pregnant = convertToBinary($("#Pregnant").is(":checked"))
     let Asthma = convertToBinary($("#Asthma").is(":checked"))
@@ -57,6 +85,15 @@
     let Immune = convertToBinary($("#Immune").is(":checked"))
     let Blood = convertToBinary($("#Blood").is(":checked"))
     let ImmuneSystem = convertToBinary($("#ImmuneSystem").is(":checked"))
+
+    //Type-Checking
+    try{
+      user_location = user_location_details.coords
+    }
+    catch(err){
+      alert("User Location is required. Please reload the page and enable location-settings")
+      return
+    }
 
     let value = {
       "testid":testid,
@@ -76,7 +113,7 @@
 
     console.log(value)
 
-    //window.location.href = "thanks.html";
+    window.location.href = "thanks.html";
     }
 
 
