@@ -21,104 +21,53 @@
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.css" rel="stylesheet">
   <script src="vendor/jquery/jquery.min.js"></script>
-  <script>
-
-  var user_location_details;
-
-  function findUserLocation(){
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successLocation);
-    } else {
-      console.log("error")
-    }
-  }
-
-  function successLocation(e){
-    user_location_details = e
-    console.log(e);
-  }
-
-
-  function submitForm(){
-
-    let testidvariable = document.querySelector('input[aria-label="testid"]').value
-    let testid = testidvariable ==""? null:testidvariable
-
-    let age_group = $("select.Age").children("option:selected").val()
-    let email = document.querySelector('input[aria-label="Email"]').value
-
-    let elem = document.querySelector(".gigantic").id
-    let subj_feeling = elem.charAt(elem.length-1)
-
-    let Pregnant = convertToBinary($("#Pregnant").is(":checked"))
-    let Asthma = convertToBinary($("#Asthma").is(":checked"))
-    let Diabetes = convertToBinary($("#Diabetes").is(":checked"))
-    let Liver = convertToBinary($("#Liver").is(":checked"))
-    let Immune = convertToBinary($("#Immune").is(":checked"))
-    let Blood = convertToBinary($("#Blood").is(":checked"))
-    let ImmuneSystem = convertToBinary($("#ImmuneSystem").is(":checked"))
-
-    let value = {
-      "testid":testid,
-      "age_group":age_group,
-      "email" : email,
-      "location":user_location_details.coords,
-      "subj_feeling": subj_feeling,
-      "conditions":{
-        "Pregnant" :Pregnant,
-        "Asthma": Asthma,
-        "Diabetes":Diabetes,
-        "Immune": Immune,
-        "Blood":Blood,
-        "ImmuneSystem": ImmuneSystem
-      }
-    }
-
-    console.log(value)
-
-    //window.location.href = "thanks.html";
-    }
-
-
-
-    function handleEmojis(id){
-      let x = ["#h11","#h12","#h13","#h14"]
-      x.forEach((e)=>{
-        $(e).removeClass('gigantic')
-      })
-
-      id = "#h1"+ Number(id)
-      console.log(id)
-      // document.getElementById(id).addClass("gigantic");
-      $(id).addClass("gigantic");
-    }
-
-
-
-  function convertToBinary(val){
-    return val==true?1:0;
-  }
-  </script>
-  <style>
-  button {
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-}
-
-.gigantic{
-  font-size:50px
-}
-  </style>
   <script src="js/apis.js"></script>
   <script src="js/TestModel.js"></script>
+
+  <script>
+    var user_location_details;
+    var db;
+    function findUserLocation(){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successLocation);
+      } else {
+        console.log("error")
+      }
+      // Initialize Firebase
+      var firebaseConfig = {
+        apiKey: "AIzaSyCtlhR_JcKU_bY5fOCOvUetbhr4_ZVUpUU",
+        authDomain: "endemic-health-hackathon.firebaseapp.com",
+        databaseURL: "https://endemic-health-hackathon.firebaseio.com",
+        projectId: "endemic-health-hackathon",
+        storageBucket: "endemic-health-hackathon.appspot.com",
+        messagingSenderId: "542524527393",
+        appId: "1:542524527393:web:7c7e59e121fc9336bba460"
+      };
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+    }
+    function successLocation(e){
+      user_location_details = e
+      console.log(e);
+    }
+  </script>
+  <style>
+    button {
+      background-color: Transparent;
+      background-repeat:no-repeat;
+      border: none;
+      cursor:pointer;
+      overflow: hidden;
+      outline:none;
+    }
+    .gigantic{
+      font-size:50px
+    }
+  </style>
+  
 </head>
 
 <body id="page-top" onload="findUserLocation()">
-
   <section class="content-section bg-light" id="about">
     <div class="container text-center">
       <div class="row">
@@ -294,24 +243,79 @@
   <script src="/__/firebase/7.8.0/firebase-firestore.js"></script>
 
   <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyCtlhR_JcKU_bY5fOCOvUetbhr4_ZVUpUU",
-      authDomain: "endemic-health-hackathon.firebaseapp.com",
-      databaseURL: "https://endemic-health-hackathon.firebaseio.com",
-      projectId: "endemic-health-hackathon",
-      storageBucket: "endemic-health-hackathon.appspot.com",
-      messagingSenderId: "542524527393",
-      appId: "1:542524527393:web:7c7e59e121fc9336bba460"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
     
     var api = new Api(db);
-    const newTest = new Test(1.376666, 103.9879789, "pending", "testing@mail.com", "347-335-1250", Date.now());
-    api.setTest(newTest);
-    api.getAllTest();
+
+    function handleEmojis(id){
+      let x = ["#h11","#h12","#h13","#h14"]
+      x.forEach((e)=>{
+        $(e).removeClass('gigantic')
+      })
+
+      id = "#h1"+ Number(id)
+      console.log(id)
+      // document.getElementById(id).addClass("gigantic");
+      $(id).addClass("gigantic");
+    }
+
+    function convertToBinary(val){
+      return val==true?1:0;
+    }
+    
+    function submitForm(){
+      // Your web app's Firebase configuration
+      
+
+      let lat = user_location_details.coords.latitude;
+      let lng = user_location_details.coords.longitude;
+      
+      let testidvariable = document.querySelector('input[aria-label="testid"]').value
+      let testid = testidvariable ==""? null:testidvariable
+      let ageGroup = $("select.Age").children("option:selected").val()
+      let email = document.querySelector('input[aria-label="Email"]').value
+      let elem = document.querySelector(".gigantic").id
+      let subjectFeeling = elem.charAt(elem.length-1)
+      let isPregnant = $("#Pregnant").is(":checked")
+      let isAsthma = $("#Asthma").is(":checked")
+      let isDiabetes = $("#Diabetes").is(":checked")
+      let isLiver = $("#Liver").is(":checked")
+      let isImmune = $("#Immune").is(":checked")
+      let isBlood = $("#Blood").is(":checked")
+      let isImmuneSystem = $("#ImmuneSystem").is(":checked")
+
+      const newTest = {
+            testId: testid,
+            ageGroup: ageGroup,
+            long: lng,
+            lat: lat,
+            status: "pending",
+            email: email,
+            phoneNo: "this.phoneNo",
+            dateTime: Date.now(),
+            isPregnant: isPregnant,
+            isAsthma: isAsthma,
+            isDiabetes: isDiabetes,
+            isLiver: isLiver,
+            isImmune: isImmune,
+            isBlood: isBlood,
+            isImmuneSystem: isImmuneSystem,
+            subjectFeeling: subjectFeeling
+        }
+
+      // const newTest = new Test(testid, ageGroup, lng, lat, "pending", email, "347-335-1250", Date.now(), 
+      //                           isPregnant, isAsthma, isDiabetes, isLiver, isImmune, isBlood, isImmuneSystem, subjectFeeling);
+      console.log(newTest);
+      db.collection("tests")
+            .add(newTest)
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                window.location.href = "thanks.html";
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+      
+    }
   </script>
 
 </body>
